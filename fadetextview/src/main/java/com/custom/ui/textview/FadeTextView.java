@@ -51,6 +51,8 @@ public class FadeTextView extends android.support.v7.widget.AppCompatTextView {
 
     private boolean isFadeRuning = false;
 
+    private FadeTextViewAnimListener mFadeTextViewAnimListener;
+
     public FadeTextView(Context context) {
         this(context, null);
     }
@@ -89,6 +91,9 @@ public class FadeTextView extends android.support.v7.widget.AppCompatTextView {
                 super.onAnimationEnd(animation);
 
                 resetFadeRuning();
+                if (mFadeTextViewAnimListener != null) {
+                    mFadeTextViewAnimListener.onAnimFinish();
+                }
             }
         });
     }
@@ -96,10 +101,10 @@ public class FadeTextView extends android.support.v7.widget.AppCompatTextView {
 
     /**
      * 设置要显示的文字并开始逐个显示
-     *
      * @param text
+     * @param fadeTextViewAnimListener 动画执行的回调方法，可以为null
      */
-    public void setTextFade(String text) {
+    public void setTextFade(String text,FadeTextViewAnimListener fadeTextViewAnimListener) {
         if (TextUtils.isEmpty(text)) {
             if (DEBUG) {
                 Log.i(TAG, "FadeTextView text is not allowed empty ");
@@ -112,6 +117,7 @@ public class FadeTextView extends android.support.v7.widget.AppCompatTextView {
             }
             return;
         }
+        this.mFadeTextViewAnimListener = fadeTextViewAnimListener;
         this.fadeText = text;
         this.length = fadeText.length();
 
@@ -202,6 +208,16 @@ public class FadeTextView extends android.support.v7.widget.AppCompatTextView {
                     break;
             }
         }
+    }
+
+    /**
+     * 动画执行的监听
+     */
+    interface FadeTextViewAnimListener {
+        /**
+         * 动画执行完毕
+         */
+        void onAnimFinish();
     }
 
 }
