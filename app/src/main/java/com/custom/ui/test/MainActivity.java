@@ -23,6 +23,6 @@ public class MainActivity extends Activity {
     }
 
     public void clickFade(View view) {
-        fadeTextView.setTextFade("永远保持马克思主义执政党本色，永远走在时代前列，永远做中国人民和中华民族的主心骨！");
+        fadeTextView.setTextFade("永远保持马克思主义执政党本色，永远走在时代前列，永远做中国人民和中华民族的主心骨！",null);
     }
 }
